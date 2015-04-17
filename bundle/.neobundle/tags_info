@@ -4,6 +4,7 @@ golden-ratio
 kickAssembler-syntax
 neobundle.vim
 neocomplete
+neomru.vim
 neosnippet
 neosnippet-snippets
 pb.vim
@@ -13,11 +14,16 @@ unite-outline
 unite-ssh
 unite.vim
 vim-airline
+vim-dispatch
 vim-easymotion
 vim-elixir
 vim-fugitive
 vim-hemisu
 vim-mix
+vim-multiple-cursors
+vim-rails
+vim-rspec
+vim-surround
 vim-unite-history
 vimfiler.vim
 vimproc.vim

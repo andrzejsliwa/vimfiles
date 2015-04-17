@@ -68,10 +68,28 @@ nnoremap <silent> [unite]l :<C-u>Unite -buffer-name=lines line<cr>
 nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers buffer<cr>
 nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<cr>
 nnoremap <silent> [unite]n :<C-u>Unite file file/new<cr>
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=recent -winheight=10 file_mru<cr>
 nnoremap <silent> [unite]/ :<C-u>Unite -buffer-name=search grep:.<cr>
 nnoremap <silent> [unite]? :<C-u>execute 'Unite -buffer-name=search grep:.::' . expand("<cword>")<cr>
-" }}} Unite
+" Fugitive on [unite]
+nnoremap [unite]ga :Git add %:p<CR><CR>
+nnoremap [unite]gs :Gstatus<CR>
+nnoremap [unite]gc :Gcommit -v -q<CR>
+nnoremap [unite]gt :Gcommit -v -q %:p<CR>
+nnoremap [unite]gd :Gdiff<CR>
+nnoremap [unite]ge :Gedit<CR>
+nnoremap [unite]gr :Gread<CR>
+nnoremap [unite]gw :Gwrite<CR><CR>
+nnoremap [unite]gl :silent! Glog<CR>:bot copen<CR>
+nnoremap [unite]gp :Ggrep<Space>
+nnoremap [unite]gm :Gmove<Space>
+nnoremap [unite]gb :Git branch<Space>
+nnoremap [unite]go :Git checkout<Space>
+nnoremap [unite]gps :Dispatch! git push<CR>
+nnoremap [unite]gpl :Dispatch! git pull<CR>
 
+" }}} Unite
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] } " {{{
 let g:vimfiler_as_default_explorer = 1
 nnoremap <silent> [unite]e :<C-u>VimFiler<cr>
@@ -110,6 +128,10 @@ NeoBundle 'Shougo/neosnippet-snippets'
 
 NeoBundleFetch 'Shougo/unite.vim'
 
+NeoBundle 'tpope/vim-rails'
+
+NeoBundle 'tpope/vim-dispatch'
+
 NeoBundle 'noahfrederick/vim-hemisu'
 
 NeoBundle 'vim-scripts/DeleteTrailingWhitespace'
@@ -119,6 +141,12 @@ NeoBundle 'elixir-lang/vim-elixir'
 NeoBundle 'mattreduce/vim-mix'
 
 NeoBundle 'Lokaltog/vim-easymotion'
+
+NeoBundle 'thoughtbot/vim-rspec'
+
+NeoBundle 'terryma/vim-multiple-cursors'
+
+NeoBundle 'tpope/vim-surround'
 
 NeoBundle 'bling/vim-airline' " AirLine {{{
 let g:airline_left_sep=''

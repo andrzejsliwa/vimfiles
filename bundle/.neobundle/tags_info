@@ -1,6 +1,7 @@
 DeleteTrailingWhitespace
 ZoomWin
 golden-ratio
+kickAssembler-syntax
 neobundle.vim
 neocomplete
 neosnippet
@@ -14,6 +15,7 @@ unite.vim
 vim-airline
 vim-easymotion
 vim-elixir
+vim-fugitive
 vim-hemisu
 vim-mix
 vim-unite-history

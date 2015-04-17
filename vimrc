@@ -23,6 +23,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'roman/golden-ratio'
 
+NeoBundle 'tpope/vim-fugitive'
+
 NeoBundle 'scrooloose/syntastic' " Syntastic {{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -130,6 +132,8 @@ NeoBundle 'vim-scripts/ZoomWin' " ZoomWin {{{
 map <leader>z <Plug>ZoomWin
 " }}}
 
+NeoBundle 'vim-scripts/kickAssembler-syntax'
+
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -143,10 +147,15 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
+call unite#custom#source('file,file/new,buffer,file_rec',
+        \ 'matchers', 'matcher_fuzzy')
+call unite#custom#source('buffer,file,file_rec',
+        \ 'sorters', 'sorter_rank')
 syntax enable
 set term=screen-256color
 set t_Co=256
-set background=dark
+" set background=dark
+let g:rehash256 = 1
 colorscheme hemisu
 
 " Tabs & Indentation

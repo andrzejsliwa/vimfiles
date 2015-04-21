@@ -32,10 +32,11 @@ Normal mode mappings.
 <space>b		Search for buffeer
 <space>p		Search for process
 <space>n		New file
+<space>m		Search for mapping
 <space>r		Search for recent files
 <space>/                Search for string in files
 <space>?                Search current word in files
-
+<space>e                VimFiller
 <space>ga               Git add
 <space>gs		Git status
 <space>gc               Git commit

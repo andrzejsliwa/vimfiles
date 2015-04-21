@@ -67,6 +67,7 @@ nnoremap <silent> [unite]l :<C-u>Unite -buffer-name=lines line<cr>
 nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers buffer<cr>
 nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=processes process<cr>
 nnoremap <silent> [unite]n :<C-u>Unite file file/new<cr>
+nnoremap <slinet> [unite]m :<C-u>Unite -buffer-name=mapping mapping<cr>
 nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=recent -winheight=10 file_mru<cr>
 nnoremap <silent> [unite]/ :<C-u>Unite -buffer-name=search grep:.<cr>
 nnoremap <silent> [unite]? :<C-u>execute 'Unite -buffer-name=search grep:.::' . expand("<cword>")<cr>
@@ -86,6 +87,7 @@ nnoremap [unite]gb :Git branch<Space>
 nnoremap [unite]go :Git checkout<Space>
 nnoremap [unite]gps :Dispatch! git push<CR>
 nnoremap [unite]gpl :Dispatch! git pull<CR>
+nnoremap [unite]s <C-W><C-W>
 " }}} Unite
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] } " {{{

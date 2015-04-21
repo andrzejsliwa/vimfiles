@@ -20,11 +20,12 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-
 NeoBundle 'roman/golden-ratio'
-
+NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'tpope/vim-fugitive'
-
+NeoBundle 'mustache/vim-mustache-handlebars'
+NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'fatih/vim-go'
 NeoBundle 'scrooloose/syntastic' " Syntastic {{{
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -36,14 +37,12 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_elixir_checker = 1
 let g:syntastic_elixir_checkers = ['elixir']
 " }}} Syntastic
-
 NeoBundle 'Shougo/vimproc.vim', { 'build' : {
             \   'windows' : 'mingw32-make -f make_mingw32.mak',
             \   'cygwin'  : 'make -f make_cygwin.mak',
             \   'mac'     : 'make -f make_mac.mak',
             \   'unix'    : 'make -f make_unix.mak',
             \ }}
-
 NeoBundle 'Shougo/unite.vim', { 'depends' : [ 'Shougo/vimproc.vim' ] } " Unite {{{
 if executable ('ag')
     let g:unite_source_grep_command = 'ag'
@@ -87,18 +86,14 @@ nnoremap [unite]gb :Git branch<Space>
 nnoremap [unite]go :Git checkout<Space>
 nnoremap [unite]gps :Dispatch! git push<CR>
 nnoremap [unite]gpl :Dispatch! git pull<CR>
-
 " }}} Unite
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] } " {{{
 let g:vimfiler_as_default_explorer = 1
 nnoremap <silent> [unite]e :<C-u>VimFiler<cr>
 " }}} VimFiler
-
 NeoBundle 'Shougo/unite-ssh', { 'depends' : [ 'Shougo/unite.vim' ] }
-
 NeoBundle 'Shougo/neocomplete'
-
 NeoBundle 'Shougo/neosnippet' " NeoSnippet {{{
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
             \ "\<Plug>(neosnippet_expand_or_jump)"
@@ -125,43 +120,27 @@ let g:unite_source_history_yank_enable=1
 nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yank history/yank<cr>
 " }}} Unite history
 NeoBundle 'Shougo/neosnippet-snippets'
-
 NeoBundleFetch 'Shougo/unite.vim'
-
 NeoBundle 'tpope/vim-rails'
-
 NeoBundle 'tpope/vim-dispatch'
-
 NeoBundle 'noahfrederick/vim-hemisu'
-
 NeoBundle 'vim-scripts/DeleteTrailingWhitespace'
-
 NeoBundle 'elixir-lang/vim-elixir'
-
 NeoBundle 'mattreduce/vim-mix'
-
 NeoBundle 'Lokaltog/vim-easymotion'
-
 NeoBundle 'thoughtbot/vim-rspec'
-
 NeoBundle 'terryma/vim-multiple-cursors'
-
 NeoBundle 'tpope/vim-surround'
-
 NeoBundle 'bling/vim-airline' " AirLine {{{
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 let g:airline_theme='powerlineish'
 " }}}
-
 NeoBundle 'troydm/pb.vim'
-
 NeoBundle 'vim-scripts/ZoomWin' " ZoomWin {{{
 map <leader>z <Plug>ZoomWin
 " }}}
-
 NeoBundle 'vim-scripts/kickAssembler-syntax'
-
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
@@ -176,15 +155,20 @@ filetype plugin indent on
 NeoBundleCheck
 
 call unite#custom#source('file,file/new,buffer,file_rec',
-        \ 'matchers', 'matcher_fuzzy')
+            \ 'matchers', 'matcher_fuzzy')
 call unite#custom#source('buffer,file,file_rec',
-        \ 'sorters', 'sorter_rank')
+            \ 'sorters', 'sorter_rank')
 syntax enable
 set term=screen-256color
 set t_Co=256
-" set background=dark
-let g:rehash256 = 1
+set background=dark
 colorscheme hemisu
+" Disable the scrollbars (NERDTree)
+set guioptions-=r
+set guioptions-=L
+" Disable the macvim toolbar
+set guioptions-=T
+set guifont=Anonymous\ Pro:h18
 
 " Tabs & Indentation
 set expandtab
@@ -203,10 +187,32 @@ set smartcase
 set encoding=utf-8
 set fileformats=unix
 
+" Backup & Swap
+set nobackup
+set nowritebackup
+set noswapfile
+
 " Text wrapping
 set wrap
 set textwidth=79
 set formatoptions=qrn1
+
+" No folding by default
+set nofoldenable
+augroup FileTypes
+    au!
+    au FileType ruby    setlocal shiftwidth=2 tabstop=2
+    au FileType snippet setlocal shiftwidth=4 tabstop=4
+    au FileType snippet setlocal shiftwidth=4 tabstop=4
+    au FileType elixir  setlocal shiftwidth=2 tabstop=2
+    au FileType erlang  setlocal shiftwidth=4 tabstop=4
+    au FileType make    setlocal noexpandtab shiftwidth=4 tabstop=4
+    au FileType snippet setlocal expandtab shiftwidth=4 tabstop=4
+    au BufNewFile,BufRead *.app.src set filetype=erlang
+    au BufNewFile,BufRead *.config  set filetype=erlang
+    au BufNewFile,BufRead *.asm set filetype=kickass
+    au BufNewFile,BufRead *.s set filetype=kickass
+augroup END
 
 augroup TrailingWhitespace
     au!
@@ -234,12 +240,19 @@ else
 endif
 " }}}
 
+function! CheatSheet()
+    sp | e ~/.vim/cheat-sheet.txt
+endfunction
+au BufNewFile,BufRead cheat-sheet set filetype=help
+
 " Bindings
 nno ; :
+" Jump anywhere
+nno <leader>j :call EasyMotion#S(1,1,2)<cr>
 " Vertical split
 nno <leader>v <C-W>v
 " Horizontal split
-nno <leader>s <C-W>split
+nno <leader>s <C-W>s
 " Cycle over panes
 nno <tab> <C-W><C-W>
 " Close current pane
@@ -254,9 +267,26 @@ nno <leader>p :Pbpaste<CR>
 nno <CR> :nohlsearch<CR><CR>
 " Reformat code
 nno <leader>f gg=G``
+" Toggle fullscreen
+nno <leader>F :set invfu<CR>
 " Edit self
 nno <leader>rc :Rc<cr>
 " Reload self
 nno <leader>rl :Rl<cr>
 " Explorer
 nno <leader>n :VimFilerExplorer<cr>
+" Cheat sheet
+nno <leader>c :call CheatSheet()<cr>
+" Move line left
+nno < <<
+nmap < <<
+" Move line right
+nno > >>
+nmap > >>
+" Move selection left
+vmap < <gv
+" Move selection right
+vmap > >gv
+" Better search
+nno / /\V
+vno / /\V
